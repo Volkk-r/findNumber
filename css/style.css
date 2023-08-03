@@ -1,0 +1,384 @@
+/* общие настройки */
+html {
+    overflow-x: hidden;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+h1,
+h2,
+h3,
+p,
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 70px;
+    background-color: #efedf1;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    font-family: Helvetica, sans-serif;
+}
+
+.container {
+    max-width: 722px;
+    height: 573px;
+    background-color: white;
+    padding: 50px;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 60px;
+    background-color: #4db8ec;
+    overflow: hidden;
+}
+
+.preview {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 60px;
+    background-color: #4db8ec;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.game-state {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #333;
+    max-width: 445px;
+    width: 100%;
+    height: 32px;
+    min-width: 288px;
+    padding: 0 16px;
+    font-weight: 400;
+    background-color: hsla(0, 0%, 100%, .4);
+}
+
+.text {
+    font-size: 8px;
+    font-weight: 600;
+}
+
+.number {
+    font-weight: 900;
+    font-size: 12px;
+}
+
+.bonus-count {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 2px;
+    border-radius: 50%;
+    border: 1px solid #333;
+}
+
+.bonus-counts {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.active {
+    background-color: #333;
+}
+
+.game-static {
+    padding: 1.5em 1.2em;
+    font-size: 1.15em;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, .3);
+}
+
+.preview-static {
+    padding: 1.5em 1.2em;
+    font-size: 1.15em;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, .3);
+}
+
+.game-move {
+    position: relative;
+    transition: transform 0.5s ease-in-out;
+    transform: translateX(40vw);
+}
+
+.preview-move {
+    position: relative;
+}
+
+.numbers {
+    font-weight: 600;
+    color: #fff;
+}
+
+.start-number {
+    position: absolute;
+    top: -99px;
+    right: 21px;
+    font-weight: 600;
+    font-size: 3.15em;
+    line-height: 1;
+    color: #fff;
+}
+
+.preview-number {
+    position: absolute;
+    top: -99px;
+    right: 21px;
+    font-weight: 600;
+    font-size: 3.15em;
+    line-height: 1;
+    color: #fff;
+}
+
+.game-field {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 35px;
+}
+
+.preview-field {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 35px;
+}
+
+.game-block {
+    text-align: center;
+    cursor: pointer;
+}
+
+.preview-block {
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    line-height: 80px;
+    font-size: 30px;
+}
+
+.cursor {
+    width: 96px;
+    height: 103px;
+    position: absolute;
+    z-index: 1;
+    top: 235px;
+    left: 90px;
+}
+
+.start {
+    display: block;
+    margin: 30px auto 10px;
+    width: 200px;
+    padding-bottom: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+}
+
+.game-block:hover {
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, .3);
+}
+
+.rotating {
+    display: block;
+    animation: rotate 0.6s infinite;
+}
+
+.fading {
+    animation: fade-in-out 0.8s infinite;
+}
+
+.scaling {
+    animation: scale-in-out 0.8s infinite;
+}
+
+.center {
+    transform: translateX(0);
+}
+
+.orange {
+    background-color: rgb(242, 142, 55);
+}
+
+.pink {
+    background-color: rgb(252, 115, 176);
+}
+
+.blue {
+    background-color: rgb(77, 184, 236);
+}
+
+.violet {
+    background-color: rgb(142, 61, 203);
+}
+
+.green {
+    background-color: rgb(148, 201, 77);
+}
+
+.countdown {
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: #2A495C;
+}
+
+.timer {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 62px;
+    color: #ffffff;
+    background-color: #6A7F8C;
+}
+
+.modal {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.modal-result {
+    position: relative;
+    min-height: 120px;
+    padding: 24px;
+    margin-bottom: 50px;
+    background-color: #4db8ec;
+    background-image: url('../img/game.svg');
+    background-repeat: no-repeat;
+    background-position: 50%;
+    color: #fff;
+}
+
+.modal-title {
+    position: relative;
+    z-index: 60;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 2.3em;
+    font-weight: 300;
+    line-height: 1;
+    text-align: center;
+}
+
+.modal-result::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .6);
+}
+
+.modal-text {
+    color: #999;
+    font-size: inherit;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.modal-data {
+    padding: 30px 45px 34px;
+    margin: 0 auto;
+}
+
+.modal-number {
+    text-align: left;
+    font-weight: 700;
+    color: #3f3f3f;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+
+    100% {
+        transform: rotate(-10deg);
+    }
+}
+
+@keyframes fade-in-out {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes scale-in-out {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.8);
+    }
+}
