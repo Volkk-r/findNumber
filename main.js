@@ -1,24 +1,27 @@
 class GameField {
     constructor() {
-        this.round = 1;
-        this.bonus = 1;
-        this.score = 0;
-        this.timer = null;
-        this.correctAnswers = 0;
-        this.totalRounds = 0;
-        this.generateNewGame();
-        this.startNumberElement = document.querySelector(".start-number");
-        this.gameFieldElement = document.querySelector(".game-field");
-        this.gameMoveElement = document.querySelector(".game-move");
-        this.timeElement = document.querySelector(".time-number");
-        this.pointsElement = document.querySelector(".points-number");
-        this.bonusCounts = document.querySelectorAll(".bonus-count");
-        this.timeLimit = 60;
-        this.updateTimer();
-        this.updateGameField();
+        // Конструктор класса GameField
+        // Инициализирует начальные значения и элементы игрового поля
+        this.round = 1; // Текущий раунд игры
+        this.bonus = 1; // Бонусные очки, увеличиваются при правильных ответах
+        this.score = 0; // Общее количество набранных очков
+        this.timer = null; // Идентификатор таймера
+        this.correctAnswers = 0; // Количество правильных ответов
+        this.totalRounds = 0; // Общее количество раундов
+        this.generateNewGame(); // Генерация новой игры согласно текущему раунду
+        this.startNumberElement = document.querySelector(".start-number"); // Элемент для отображения стартового числа
+        this.gameFieldElement = document.querySelector(".game-field"); // Элемент игрового поля
+        this.gameMoveElement = document.querySelector(".game-move"); // Элемент игрового хода
+        this.timeElement = document.querySelector(".time-number"); // Элемент для отображения времени
+        this.pointsElement = document.querySelector(".points-number"); // Элемент для отображения набранных очков
+        this.bonusCounts = document.querySelectorAll(".bonus-count"); // Элементы для отображения бонусных очков
+        this.timeLimit = 60; // Время ограничения на раунд в секундах
+        this.updateTimer(); // Обновление таймера для отображения времени
+        this.updateGameField(); // Обновление игрового поля после генерации новой игры
     }
 
     formatTime(seconds) {
+        // Форматирует время из секунд в формат 'мм:сс'
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
         const formattedMinutes = String(minutes).padStart(2, "0");
@@ -26,22 +29,24 @@ class GameField {
         return `${formattedMinutes}:${formattedSeconds}`;
     }
 
-
     updateTimer() {
+        // Обновляет таймер на игровом поле
         if (this.timeElement) {
             this.timeElement.textContent = this.formatTime(this.timeLimit);
             if (this.timeLimit <= 0) {
                 clearInterval(this.timerInterval);
-                this.round = 1;
+                this.round = 1; // Сброс текущего раунда при окончании времени
             }
         }
     }
 
     generateRandomNumber(min, max) {
+        // Генерирует случайное целое число в заданном диапазоне [min, max]
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     generateRandomArray(length, minNumber, maxNumber) {
+        // Генерирует массив случайных уникальных чисел заданной длины в заданном диапазоне
         const randomArray = new Set();
         while (randomArray.size < length) {
             const randomNumber = this.generateRandomNumber(minNumber, maxNumber);
@@ -51,21 +56,25 @@ class GameField {
     }
 
     getRandomNumberFromArray(numbersArray) {
+        // Возвращает случайное число из заданного массива чисел
         const randomIndex = Math.floor(Math.random() * numbersArray.length);
         return numbersArray[randomIndex];
     }
 
     getRandomColor() {
+        // Возвращает случайный цвет из предопределенного массива цветов
         const colors = ['#4db8ec', '#f28e37', '#8e3dcb', '#94c94d', '#fc73b0'];
         return colors[Math.floor(Math.random() * colors.length)];
     }
 
     getRandomClass() {
+        // Возвращает случайный класс из предопределенного массива классов
         const classes = ["scaling", "fading", "rotating"];
         return classes[Math.floor(Math.random() * classes.length)];
     }
 
     getArrayLengthForRound(round) {
+        // Возвращает длину массива чисел для заданного раунда
         switch (round) {
             case 1:
             case 2:
@@ -83,6 +92,7 @@ class GameField {
     }
 
     getNumberRangeForRound(round) {
+        // Возвращает диапазон чисел для заданного раунда
         switch (round) {
             case 1:
                 return { min: 1, max: 10 };
@@ -104,6 +114,7 @@ class GameField {
     }
 
     getFontSizeForRound(round) {
+        // Возвращает размер шрифта для чисел в зависимости от раунда
         switch (round) {
             case 1:
             case 2:
@@ -118,6 +129,7 @@ class GameField {
         }
     }
     getLineHeightForRound(round) {
+        // Возвращает высоту строки для чисел в зависимости от раунда
         switch (round) {
             case 1:
             case 2:
@@ -134,6 +146,7 @@ class GameField {
         }
     }
     generateNewGame() {
+        // Генерирует новую игру: массив чисел, длина массива и начальное число для нового раунда
         this.arrayLength = this.getArrayLengthForRound(this.round);
         const numberRange = this.getNumberRangeForRound(this.round);
         this.numbersArray = this.generateRandomArray(this.arrayLength, numberRange.min, numberRange.max);
@@ -141,6 +154,7 @@ class GameField {
     }
 
     updateGameField() {
+        // Обновляет игровое поле с учетом текущего раунда и сгенерированных чисел
         this.startNumberElement.textContent = this.startNumber;
         if (this.round > 1) {
             this.gameFieldElement.innerHTML = "";
@@ -152,6 +166,7 @@ class GameField {
             levelNumberElement.textContent = this.round;
         }
 
+        // Задаем разметку и отступы в зависимости от текущего раунда
         switch (this.round) {
             case 1:
             case 2:
@@ -202,37 +217,40 @@ class GameField {
                 }
             }
 
+            // Обработчик события клика по блоку числа
             gameBlock.addEventListener("click", () => {
                 setTimeout(() => {
                     if (number === this.startNumber) {
-                        this.score += 42 * this.bonus; // Правильный ответ - добавляем очки с учетом бонуса
+                        // Правильный ответ - добавляем очки с учетом бонуса
+                        this.score += 42 * this.bonus;
                         this.bonus = Math.min(5, this.bonus + 1); // Увеличиваем бонус (максимум 5)
-                        this.round++;
-                        this.correctAnswers++;
-                        this.generateNewGame();
-                        this.updateGameField();
+                        this.round++; // Переходим на следующий раунд
+                        this.correctAnswers++; // Увеличиваем количество правильных ответов
+                        this.generateNewGame(); // Генерируем новую игру для следующего раунда
+                        this.updateGameField(); // Обновляем игровое поле
                     } else {
-                        this.bonus--;
+                        this.bonus--; // Уменьшаем бонус за неправильный ответ
                         if (this.round == 1) {
-                            this.generateNewGame();
+                            this.generateNewGame(); // Генерируем новую игру снова, если раунд был первым
                         } else {
-                            this.round--;
-                            this.generateNewGame();
+                            this.round--; // Возвращаемся на предыдущий раунд
+                            this.generateNewGame(); // Генерируем новую игру для предыдущего раунда
                         }
-                        this.updateGameField();
+                        this.updateGameField(); // Обновляем игровое поле
                     }
-                    this.updatePoints();
-                    this.totalRounds++;
-                    this.checkGameOver();
-                }, 500);
-                this.gameMoveElement.classList.remove("center");
+                    this.updatePoints(); // Обновляем отображение набранных очков
+                    this.totalRounds++; // Увеличиваем общее количество раундов
+                    this.checkGameOver(); // Проверяем, завершена ли игра
+                }, 500); // Задержка после клика, чтобы показать результат перед обновлением
+                this.gameMoveElement.classList.remove("center"); // Удаляем класс "center" у элемента игрового хода
             });
-            this.gameFieldElement.appendChild(gameBlock);
+            this.gameFieldElement.appendChild(gameBlock); // Добавляем блок числа на игровое поле
         });
-        this.updateBonusCounts();
+        this.updateBonusCounts(); // Обновляем отображение бонусных очков
     }
 
     checkGameOver() {
+        // Проверяет, завершена ли игра, и выводит результаты
         if (this.timeLimit <= 0) {
             // Останавливаем таймер и игру
             clearInterval(this.timer);
@@ -257,13 +275,16 @@ class GameField {
             accuracyResultElement.textContent = accuracy.toFixed(2) + "%";
         }
     }
+
     updatePoints() {
+        // Обновляет отображение набранных очков
         if (this.pointsElement) {
             this.pointsElement.textContent = this.score;
         }
     }
 
     updateBonusCounts() {
+        // Обновляет отображение бонусных очков
         this.bonusCounts.forEach((count, index) => {
             count.classList.toggle("active", index < this.bonus);
         });
@@ -275,6 +296,7 @@ class GameField {
     }
 
     startGame() {
+        // Начинает игру
         const previewElement = document.querySelector(".preview");
         const countdownElement = document.querySelector(".countdown");
         const gameElement = document.querySelector(".game");
@@ -290,23 +312,24 @@ class GameField {
         if (gameElement) {
             gameElement.style.display = "block";
             setTimeout(() => {
-                this.gameMoveElement.classList.add("center");
+                this.gameMoveElement.classList.add("center"); // Показываем ход с задержкой для игрового ощущения
             }, 100);
         }
 
-        this.updateTimer();
+        this.updateTimer(); // Обновляем таймер
         this.timer = setInterval(() => {
-            this.timeLimit -= 1;
-            this.updateTimer();
+            this.timeLimit -= 1; // Уменьшаем оставшееся время на 1 секунду
+            this.updateTimer(); // Обновляем таймер
             if (this.timeLimit <= 0) {
-                clearInterval(this.timer);
+                clearInterval(this.timer); // Останавливаем таймер при окончании времени
             }
-            this.checkGameOver();
-        }, 1000);
+            this.checkGameOver(); // Проверяем, завершена ли игра
+        }, 1000); // Обновляем таймер каждую секунду
     }
 }
 
 function startCountdown(callback, count) {
+    // Запускает обратный отсчет перед началом игры
     const previewElement = document.querySelector(".preview");
     const countdownElement = document.querySelector(".countdown");
     const countdown = document.querySelector(".timer");
@@ -327,17 +350,17 @@ function startCountdown(callback, count) {
         if (currentCount <= 0) {
             clearInterval(countdownInterval);
             countdownElement.style.display = "none";
-            callback();
+            callback(); // Запускаем функцию обратного вызова после завершения обратного отсчета
         }
-    }, 1000);
+    }, 1000); // Обновляем отсчет каждую секунду
 }
 
-const gameField = new GameField();
+const gameField = new GameField(); // Создаем экземпляр класса GameField
 const previewElement = document.querySelector(".preview");
 if (previewElement) {
     previewElement.addEventListener("click", () => {
         startCountdown(() => {
-            gameField.startGame();
-        }, 3);
+            gameField.startGame(); // Запускаем обратный отсчет и начинаем игру после него
+        }, 3); // Обратный отсчет в три секунды
     });
 }
